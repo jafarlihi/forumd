@@ -1,0 +1,46 @@
+scalar Date
+
+type User {
+    id: ID!
+    username: String!
+    email: String!
+    password: String!
+    access: Int!
+    avatar: String!
+}
+
+type UserAndToken {
+    token: String!
+    user: User!
+}
+
+type Category {
+    id: ID!
+    name: String!
+    color: String!
+}
+
+type Thread {
+    id: ID!
+    user: User!
+    title: String!
+    postCount: Int!
+    category: Category!
+    createdAt: Date!
+}
+
+type Query {
+  threads(page: Int!, pageSize: Int!): [Thread!]!
+  users: [User!]!
+  categories: [Category!]!
+}
+
+input NewUser {
+    username: String!
+    email: String!
+    password: String!
+}
+
+type Mutation {
+  createUser(input: NewUser!): UserAndToken!
+}
