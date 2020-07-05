@@ -31,7 +31,7 @@ type Thread {
 
 type Query {
   threads(page: Int!, pageSize: Int!): [Thread!]!
-  users: [User!]!
+  users(page: Int!, pageSize: Int!): [User!]!
   categories: [Category!]!
 }
 

@@ -16,3 +16,23 @@ func CreateUser(username string, email string, password string, access int, avat
 	}
 	return user, nil
 }
+
+func GetUsers(page int, pageSize int) ([]*model.User, error) {
+	sql := "SELECT id, username, email, access, avatar FROM users OFFSET $1 LIMIT $2"
+	rows, err := database.Database.Query(sql, page*pageSize, pageSize)
+	if err != nil {
+		logger.Log.Error("Failed to SELECT users, error: " + err.Error())
+		return nil, err
+	}
+	defer rows.Close()
+	users := make([]*model.User, 0)
+	for rows.Next() {
+		user := &model.User{}
+		if err := rows.Scan(&user.ID, user.Username, user.Email, user.Access, user.Avatar); err != nil {
+			logger.Log.Error("Failed to scan SELECTed row of threads, error: " + err.Error())
+			return nil, err
+		}
+		users = append(users, user)
+	}
+	return users, nil
+}

@@ -11,7 +11,7 @@ import (
 
 	jwt "github.com/dgrijalva/jwt-go"
 	"github.com/google/uuid"
-	"github.com/holys/initials-avatar"
+	avatar "github.com/holys/initials-avatar"
 	"github.com/jafarlihi/forumd/config"
 	"github.com/jafarlihi/forumd/graph/generated"
 	"github.com/jafarlihi/forumd/graph/model"
@@ -26,6 +26,7 @@ func (r *mutationResolver) CreateUser(ctx context.Context, input model.NewUser) 
 	if len(input.Password) < 6 {
 		return nil, fmt.Errorf("Password shorter than 6")
 	}
+	// TODO: Check if username has @ symbol
 	passwordHash, err := bcrypt.GenerateFromPassword([]byte(input.Password), bcrypt.DefaultCost)
 	if err != nil {
 		return nil, fmt.Errorf("Failed to hash the password")
@@ -62,12 +63,12 @@ func (r *queryResolver) Threads(ctx context.Context, page int, pageSize int) ([]
 	return repository.GetThreads(page, pageSize)
 }
 
-func (r *queryResolver) Users(ctx context.Context) ([]*model.User, error) {
-	panic(fmt.Errorf("not implemented"))
+func (r *queryResolver) Users(ctx context.Context, page int, pageSize int) ([]*model.User, error) {
+	return repository.GetUsers(page, pageSize)
 }
 
 func (r *queryResolver) Categories(ctx context.Context) ([]*model.Category, error) {
-	panic(fmt.Errorf("not implemented"))
+	return repository.GetCategories()
 }
 
 // Mutation returns generated.MutationResolver implementation.
