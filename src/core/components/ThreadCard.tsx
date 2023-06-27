@@ -30,7 +30,7 @@ export default function TheadCard(props: ThreadCardProps) {
           height: "100%",
           alignItems: "center",
           justifyContent: "end",
-          width: "0px",
+          width: `${props.thread.categories.length * 42 + 35}px`,
         }}
       >
         {props.thread.categories.map((c) => (
