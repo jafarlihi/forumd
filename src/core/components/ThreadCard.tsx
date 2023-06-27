@@ -4,7 +4,7 @@ import dateFormat from "dateformat"
 import { Category, Thread, User } from "@prisma/client"
 
 interface ThreadCardProps {
-  thread: Thread & { category: Category; creator: Pick<User, "id" | "name" | "avatar"> }
+  thread: Thread & { categories: Category[]; creator: Pick<User, "id" | "name" | "avatar"> }
 }
 
 export default function TheadCard(props: ThreadCardProps) {
@@ -33,11 +33,11 @@ export default function TheadCard(props: ThreadCardProps) {
               variant="flat"
               style={{
                 color: "white",
-                backgroundColor: `#${props.thread.category.color}`,
+                backgroundColor: `#${props.thread.categories[0]?.color}`,
                 height: "23.6875px",
               }}
             >
-              {props.thread.category.name}
+              {props.thread.categories[0]?.name}
             </Badge>
           </div>
         </div>

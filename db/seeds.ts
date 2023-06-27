@@ -45,7 +45,7 @@ const seed = async () => {
             id: user.id,
           },
         },
-        category: {
+        categories: {
           connect: {
             id: _.sample([cat1.id, cat2.id, cat3.id]),
           },

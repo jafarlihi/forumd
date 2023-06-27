@@ -67,15 +67,14 @@ model Token {
 // }
 
 model Thread {
-  id         Int      @id @default(autoincrement())
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
-  creator    User     @relation(fields: [creatorId], references: [id])
+  id         Int        @id @default(autoincrement())
+  createdAt  DateTime   @default(now())
+  updatedAt  DateTime   @updatedAt
+  creator    User       @relation(fields: [creatorId], references: [id])
   creatorId  Int
-  category   Category @relation(fields: [categoryId], references: [id])
-  categoryId Int
+  categories Category[]
   title      String
-  postCount  Int      @default(0)
+  postCount  Int        @default(0)
 }
 
 model Category {

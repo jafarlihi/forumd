@@ -1,12 +1,14 @@
 import { invoke } from "@blitzjs/rpc"
-import { Category, Thread } from "@prisma/client"
+import { Category, Thread, User } from "@prisma/client"
 import { useState, useEffect, useCallback } from "react"
 import getThreads from "src/threads/queries/getThreads"
 import { useWindowSize } from "usehooks-ts"
 
 function useThreadFetch(page: number, selectedCategories: Category[]) {
   const [loading, setLoading] = useState(false)
-  const [threads, setThreads] = useState<Thread[]>([])
+  const [threads, setThreads] = useState<
+    (Thread & { categories: Category[]; creator: Pick<User, "id" | "name" | "avatar"> })[]
+  >([])
   const [selectedCategoriesState, setSelectedCategories] = useState(selectedCategories)
   const { height } = useWindowSize()
   const take = Math.floor(height / 50)
@@ -16,11 +18,13 @@ function useThreadFetch(page: number, selectedCategories: Category[]) {
       setLoading(true)
       const response = await invoke(getThreads, {
         where: {
-          category: {
-            id: {
-              in: selectedCategoriesState.length
-                ? selectedCategoriesState.map((c) => c.id)
-                : undefined,
+          categories: {
+            some: {
+              id: {
+                in: selectedCategoriesState.length
+                  ? selectedCategoriesState.map((c) => c.id)
+                  : undefined,
+              },
             },
           },
         },
@@ -32,7 +36,7 @@ function useThreadFetch(page: number, selectedCategories: Category[]) {
     } catch (err) {
       console.error(err)
     }
-  }, [page, selectedCategoriesState])
+  }, [page, selectedCategoriesState, take])
 
   useEffect(() => {
     void fetchThreads()

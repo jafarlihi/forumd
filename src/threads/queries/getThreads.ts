@@ -22,7 +22,7 @@ export default resolver.pipe(async ({ where, orderBy, skip = 0, take = 100 }: Ge
         where,
         orderBy,
         include: {
-          category: true,
+          categories: true,
           creator: {
             select: {
               id: true,
