@@ -53,6 +53,32 @@ const seed = async () => {
       },
     })
   }
+
+  const user2 = await db.user.create({
+    data: {
+      email: chance.email(),
+      name: chance.name(),
+    },
+  })
+
+  for (let i = 0; i < 25; i++) {
+    await db.thread.create({
+      data: {
+        title: chance.sentence(),
+        creator: {
+          connect: {
+            id: user2.id,
+          },
+        },
+        categories: {
+          connect: [
+            { id: _.sample([cat1.id, cat2.id, cat3.id]) },
+            { id: _.sample([cat1.id, cat2.id, cat3.id]) },
+          ],
+        },
+      },
+    })
+  }
 }
 
 export default seed

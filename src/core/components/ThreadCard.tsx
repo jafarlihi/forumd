@@ -24,23 +24,35 @@ export default function TheadCard(props: ThreadCardProps) {
           {dateFormat(props.thread.createdAt, "ddd mmm d yyyy")}
         </Text>
       </div>
-      <div style={{ display: "flex", height: "100%", alignItems: "center", width: "100px" }}>
-        <div style={{ width: "65px" }}>
-          <div style={{ float: "right" }}>
-            <Badge
-              isSquared
-              size="sm"
-              variant="flat"
-              style={{
-                color: "white",
-                backgroundColor: `#${props.thread.categories[0]?.color}`,
-                height: "23.6875px",
-              }}
-            >
-              {props.thread.categories[0]?.name}
-            </Badge>
-          </div>
-        </div>
+      <div
+        style={{
+          display: "flex",
+          height: "100%",
+          alignItems: "center",
+          justifyContent: "end",
+          width: "0px",
+        }}
+      >
+        {props.thread.categories.map((c) => (
+          <>
+            <div style={{ width: "65px" }}>
+              <div style={{ float: "right" }}>
+                <Badge
+                  isSquared
+                  size="sm"
+                  variant="flat"
+                  style={{
+                    color: "white",
+                    backgroundColor: `#${c.color}`,
+                    height: "23.6875px",
+                  }}
+                >
+                  {c.name}
+                </Badge>
+              </div>
+            </div>
+          </>
+        ))}
         <Spacer x={0.3} />
         <div
           style={{
