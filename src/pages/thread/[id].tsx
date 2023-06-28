@@ -60,7 +60,7 @@ const ThreadPage: BlitzPage = (props: any) => {
         <Text
           color={
             thread?.categories[0]
-              ? isDarkColor(thread?.categories[0]?.color)
+              ? isDarkColor(thread?.categories[thread?.categories.length - 1]?.color)
                 ? "white"
                 : "black"
               : "black"
