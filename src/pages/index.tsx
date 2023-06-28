@@ -3,7 +3,7 @@ import { BlitzPage } from "@blitzjs/next"
 import { APP_NAME } from "src/core/constants"
 import { Grid, Loading, Spacer } from "@nextui-org/react"
 import { useWindowSize } from "usehooks-ts"
-import ThreadCard from "../core/components/ThreadCard"
+import ThreadCard from "../core/components/ThreadCard/ThreadCard"
 import CategoryPill from "../core/components/CategoryPill"
 import { useEffect, useState } from "react"
 import { useQuery } from "@blitzjs/rpc"
@@ -60,7 +60,6 @@ const Feed: BlitzPage = (props: any) => {
           {threads.map((t) => (
             <div key={t.id}>
               <ThreadCard thread={t} />
-              <Spacer y={0.5} />
             </div>
           ))}
           <div
