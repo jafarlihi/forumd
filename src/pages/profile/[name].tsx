@@ -13,7 +13,7 @@ const Profile: BlitzPage = (props: any) => {
 
   useEffect(() => {
     const fetchUser = async () => {
-      setUser(await invoke(getUser, router.query.name))
+      setUser(await invoke(getUser, { name: router.query.name }))
     }
     void fetchUser()
   }, [router.query.name])
