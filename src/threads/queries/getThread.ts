@@ -8,7 +8,7 @@ const GetThread = z.object({
 })
 
 export default resolver.pipe(resolver.zod(GetThread), async ({ id }) => {
-  const thread = await db.thread.findFirst({ where: { id } })
+  const thread = await db.thread.findFirst({ where: { id }, include: { categories: true } })
 
   if (!thread) throw new NotFoundError()
 

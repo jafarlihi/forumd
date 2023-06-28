@@ -10,7 +10,7 @@ export default function CategoryPill(props: any) {
       size="sm"
       variant="flat"
       color={props.isSelected ? "primary" : "default"}
-      style={{ color: !isDark ? "black" : "white", cursor: "pointer" }}
+      style={{ color: !isDark ? "black" : "white", cursor: props.onClick ? "pointer" : "default" }}
       onClick={props.onClick}
     >
       <VscCircleLargeFilled color={`#${props.category.color}`} size={10} style={{}} />
