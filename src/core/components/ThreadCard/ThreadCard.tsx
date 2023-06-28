@@ -1,4 +1,4 @@
-import { Avatar, Badge, Spacer, Text } from "@nextui-org/react"
+import { Avatar, Badge, Spacer, Text, useTheme } from "@nextui-org/react"
 import { IoChatbubblesSharp } from "react-icons/io5"
 import dateFormat from "dateformat"
 import { Category, Thread, User } from "@prisma/client"
@@ -11,9 +11,13 @@ interface ThreadCardProps {
 
 export default function TheadCard(props: ThreadCardProps) {
   const router = useRouter()
+  const { isDark } = useTheme()
 
   return (
-    <div className={styles.wrapper} onClick={() => router.push(`/thread/${props.thread.id}`)}>
+    <div
+      className={!isDark ? styles.wrapper_light : styles.wrapper_dark}
+      onClick={() => router.push(`/thread/${props.thread.id}`)}
+    >
       {!props.thread.creator.avatar ? (
         <Avatar text={props.thread.creator.name?.toUpperCase().charAt(0)} />
       ) : (
