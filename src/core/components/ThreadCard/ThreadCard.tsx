@@ -3,14 +3,17 @@ import { IoChatbubblesSharp } from "react-icons/io5"
 import dateFormat from "dateformat"
 import { Category, Thread, User } from "@prisma/client"
 import styles from "./ThreadCard.module.css"
+import { useRouter } from "next/router"
 
 interface ThreadCardProps {
   thread: Thread & { categories: Category[]; creator: Pick<User, "id" | "name" | "avatar"> }
 }
 
 export default function TheadCard(props: ThreadCardProps) {
+  const router = useRouter()
+
   return (
-    <div className={styles.wrapper}>
+    <div className={styles.wrapper} onClick={() => router.push(`/thread/${props.thread.id}`)}>
       {!props.thread.creator.avatar ? (
         <Avatar text={props.thread.creator.name?.toUpperCase().charAt(0)} />
       ) : (

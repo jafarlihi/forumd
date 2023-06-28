@@ -1,6 +1,6 @@
 import db from "db"
 
-export default async function getCurrentUser(name: string) {
+export default async function getUser(name: string) {
   const user = await db.user.findUnique({
     where: { name },
     select: {
