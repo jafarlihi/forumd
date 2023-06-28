@@ -60,6 +60,7 @@ const Feed: BlitzPage = (props: any) => {
           {threads.map((t) => (
             <div key={t.id}>
               <ThreadCard thread={t} />
+              <Spacer y={0.5} />
             </div>
           ))}
           <div

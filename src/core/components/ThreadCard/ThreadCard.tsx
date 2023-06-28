@@ -28,7 +28,7 @@ export default function TheadCard(props: ThreadCardProps) {
       <div
         style={{
           display: "flex",
-          height: "100%",
+          height: "auto",
           alignItems: "center",
           justifyContent: "end",
           width: `${props.thread.categories.length * 42 + 35}px`,
