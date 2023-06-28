@@ -1,7 +1,7 @@
 import Layout from "src/core/layouts/Layout"
 import { BlitzPage } from "@blitzjs/next"
 import { APP_NAME } from "src/core/constants"
-import { Grid, Loading, Spacer } from "@nextui-org/react"
+import { Button, Grid, Loading, Spacer } from "@nextui-org/react"
 import { useWindowSize } from "usehooks-ts"
 import ThreadCard from "../core/components/ThreadCard/ThreadCard"
 import CategoryPill from "../core/components/CategoryPill"
@@ -11,6 +11,7 @@ import getCategories from "src/categories/queries/getCategories"
 import { Category } from "@prisma/client"
 import useInfiniteScroll from "src/core/hooks/useInfiniteScroll"
 import useThreadFetch from "src/core/hooks/useThreadFetch"
+import { AiOutlinePlus } from "react-icons/ai"
 
 const Feed: BlitzPage = (props: any) => {
   const { width } = useWindowSize()
@@ -46,6 +47,16 @@ const Feed: BlitzPage = (props: any) => {
               top: "65px",
             }}
           >
+            <Button
+              bordered
+              color="primary"
+              auto
+              icon={<AiOutlinePlus />}
+              size={width <= 1150 ? "xs" : "md"}
+            >
+              New Thread
+            </Button>
+            <Spacer y={1} />
             {categories.categories.map((c: Category) => (
               <CategoryPill
                 key={c.id}
