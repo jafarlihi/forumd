@@ -5,13 +5,15 @@ import { Button, Grid, Loading, Spacer } from "@nextui-org/react"
 import { useWindowSize } from "usehooks-ts"
 import ThreadCard from "../core/components/ThreadCard/ThreadCard"
 import CategoryPill from "../core/components/CategoryPill"
-import { useEffect, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import { useQuery } from "@blitzjs/rpc"
 import getCategories from "src/categories/queries/getCategories"
 import { Category } from "@prisma/client"
 import useInfiniteScroll from "src/core/hooks/useInfiniteScroll"
 import useThreadFetch from "src/core/hooks/useThreadFetch"
 import { AiOutlinePlus } from "react-icons/ai"
+import { useCurrentUser } from "src/users/hooks/useCurrentUser"
+import { EventContext } from "./_app"
 
 const Feed: BlitzPage = (props: any) => {
   const { width } = useWindowSize()
@@ -19,6 +21,8 @@ const Feed: BlitzPage = (props: any) => {
   const [selectedCategories, setSelectedCategories] = useState<Category[]>([])
   const { loadMoreRef, page, reset: resetScroll } = useInfiniteScroll()
   const { loading, threads, reset } = useThreadFetch(page, selectedCategories)
+  const currentUser = useCurrentUser()
+  const event = useContext(EventContext)
 
   useEffect(() => {
     reset(selectedCategories)
@@ -30,6 +34,13 @@ const Feed: BlitzPage = (props: any) => {
       setSelectedCategories((p) => p.filter((c) => c.id !== category.id))
     } else {
       setSelectedCategories((p) => [category, ...p])
+    }
+  }
+
+  const onNewThreadClick = () => {
+    if (!currentUser) {
+      event?.emit({ type: "OPEN_LOGIN_REGISTER_MODAL" })
+      return
     }
   }
 
@@ -53,6 +64,7 @@ const Feed: BlitzPage = (props: any) => {
               auto
               icon={<AiOutlinePlus />}
               size={width <= 1150 ? "xs" : "md"}
+              onPress={onNewThreadClick}
             >
               New Thread
             </Button>

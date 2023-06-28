@@ -5,6 +5,8 @@ import { withBlitz } from "src/blitz-client"
 import { NextUIProvider, createTheme } from "@nextui-org/react"
 import { ThemeProvider as NextThemesProvider } from "next-themes"
 import "src/styles/globals.css"
+import { useEventEmitter } from "ahooks"
+import { EventEmitter } from "ahooks/lib/useEventEmitter"
 
 const lightTheme = createTheme({
   type: "light",
@@ -34,8 +36,14 @@ function RootErrorFallback({ error }: ErrorFallbackProps) {
   }
 }
 
+export const EventContext = React.createContext<EventEmitter<{ type: string; value?: any }> | null>(
+  null
+)
+
 function MyApp({ Component, pageProps }: AppProps) {
   const getLayout = Component.getLayout || ((page) => page)
+  const event = useEventEmitter<{ type: string; value?: any }>()
+
   return (
     <NextThemesProvider
       defaultTheme="system"
@@ -47,7 +55,9 @@ function MyApp({ Component, pageProps }: AppProps) {
     >
       <NextUIProvider>
         <ErrorBoundary FallbackComponent={RootErrorFallback}>
-          <Suspense>{getLayout(<Component {...pageProps} />)}</Suspense>
+          <EventContext.Provider value={event}>
+            <Suspense>{getLayout(<Component {...pageProps} />)}</Suspense>
+          </EventContext.Provider>
         </ErrorBoundary>
       </NextUIProvider>
     </NextThemesProvider>

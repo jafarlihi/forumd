@@ -21,8 +21,9 @@ import { IoSettingsOutline } from "react-icons/io5"
 import { BiLogOut } from "react-icons/bi"
 import { useMutation } from "@blitzjs/rpc"
 import logout from "src/auth/mutations/logout"
-import { useEffect, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import { useRouter } from "next/router"
+import { EventContext } from "src/pages/_app"
 
 export default function Header(props: any) {
   const router = useRouter()
@@ -33,6 +34,11 @@ export default function Header(props: any) {
   const currentUser = useCurrentUser()
   const [logoutMutation] = useMutation(logout)
   const [selection, setSelection] = useState<any>()
+  const event = useContext(EventContext)
+
+  event?.useSubscription((val) => {
+    if (val.type === "OPEN_LOGIN_REGISTER_MODAL") setLoginRegisterModalVisible(true)
+  })
 
   useEffect(() => {
     if (selection?.currentKey === "logout") void logoutMutation()
