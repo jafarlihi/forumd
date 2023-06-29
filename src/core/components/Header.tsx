@@ -36,8 +36,8 @@ export default function Header(props: any) {
   const [selection, setSelection] = useState<any>()
   const event = useContext(EventContext)
 
-  event?.useSubscription((val) => {
-    if (val.type === "OPEN_LOGIN_REGISTER_MODAL") setLoginRegisterModalVisible(true)
+  event?.useSubscription((e) => {
+    if (e.type === "OPEN_LOGIN_REGISTER_MODAL") setLoginRegisterModalVisible(true)
   })
 
   useEffect(() => {

@@ -4,7 +4,6 @@ import { Avatar } from "@nextui-org/react"
 import { User } from "@prisma/client"
 import { useRouter } from "next/router"
 import { useEffect, useState } from "react"
-import Layout from "src/core/layouts/Layout"
 import getUser from "src/users/queries/getUser"
 
 const Profile: BlitzPage = (props: any) => {
@@ -18,11 +17,7 @@ const Profile: BlitzPage = (props: any) => {
     void fetchUser()
   }, [router.query.name])
 
-  return (
-    <Layout title="Profile">
-      <Avatar text={user?.name?.charAt(0)} size="xl" />
-    </Layout>
-  )
+  return <Avatar text={user?.name?.charAt(0)} size="xl" />
 }
 
 export default Profile

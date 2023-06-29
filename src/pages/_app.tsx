@@ -7,6 +7,8 @@ import { ThemeProvider as NextThemesProvider } from "next-themes"
 import "src/styles/globals.css"
 import { useEventEmitter } from "ahooks"
 import { EventEmitter } from "ahooks/lib/useEventEmitter"
+import { APP_NAME } from "src/core/constants"
+import Layout from "src/core/layouts/Layout"
 
 const lightTheme = createTheme({
   type: "light",
@@ -56,7 +58,9 @@ function MyApp({ Component, pageProps }: AppProps) {
       <NextUIProvider>
         <ErrorBoundary FallbackComponent={RootErrorFallback}>
           <EventContext.Provider value={event}>
-            <Suspense>{getLayout(<Component {...pageProps} />)}</Suspense>
+            <Suspense>
+              <Layout title={APP_NAME}>{getLayout(<Component {...pageProps} />)}</Layout>
+            </Suspense>
           </EventContext.Provider>
         </ErrorBoundary>
       </NextUIProvider>
