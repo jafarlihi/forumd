@@ -5,22 +5,26 @@ import { Button, Grid, Loading, Spacer } from "@nextui-org/react"
 import { useWindowSize } from "usehooks-ts"
 import ThreadCard from "../core/components/ThreadCard/ThreadCard"
 import CategoryPill from "../core/components/CategoryPill"
-import { useContext, useEffect, useState } from "react"
+import { SyntheticEvent, useContext, useEffect, useState } from "react"
 import { useQuery } from "@blitzjs/rpc"
 import getCategories from "src/categories/queries/getCategories"
 import { Category } from "@prisma/client"
 import useInfiniteScroll from "src/core/hooks/useInfiniteScroll"
 import useThreadFetch from "src/core/hooks/useThreadFetch"
 import { AiOutlinePlus } from "react-icons/ai"
+import { MdDragHandle } from "react-icons/md"
 import { useCurrentUser } from "src/users/hooks/useCurrentUser"
 import { EventContext } from "./_app"
+import { Resizable } from "react-resizable"
 
 const Feed: BlitzPage = (props: any) => {
-  const { width } = useWindowSize()
+  const { width, height } = useWindowSize()
   const [categories] = useQuery(getCategories, undefined)
   const [selectedCategories, setSelectedCategories] = useState<Category[]>([])
   const { loadMoreRef, page, reset: resetScroll } = useInfiniteScroll()
   const { loading, threads, reset } = useThreadFetch(page, selectedCategories)
+  const [newPostPopoverHeight, setNewPostPopoverHeight] = useState(300)
+  const [newPostPopoverVisible, setNewPostPopoverVisible] = useState(false)
   const currentUser = useCurrentUser()
   const event = useContext(EventContext)
 
@@ -42,6 +46,11 @@ const Feed: BlitzPage = (props: any) => {
       event?.emit({ type: "OPEN_LOGIN_REGISTER_MODAL" })
       return
     }
+    setNewPostPopoverVisible(true)
+  }
+
+  const onResize = (_event: SyntheticEvent, { size }) => {
+    setNewPostPopoverHeight(size.height)
   }
 
   return (
@@ -94,6 +103,42 @@ const Feed: BlitzPage = (props: any) => {
           </div>
         </Grid>
       </Grid.Container>
+      {newPostPopoverVisible && (
+        <Resizable
+          height={newPostPopoverHeight}
+          width={width}
+          onResize={onResize}
+          handle={
+            <div
+              style={{
+                display: "flex",
+                width: "100%",
+                justifyContent: "center",
+                cursor: "ns-resize",
+              }}
+            >
+              <MdDragHandle />
+            </div>
+          }
+          axis="y"
+          resizeHandles={["n"]}
+          lockAspectRatio={true}
+          transformScale={1}
+          minConstraints={[150, 150]}
+          maxConstraints={[height - 54, height - 54]}
+        >
+          <div
+            style={{
+              position: "fixed",
+              bottom: 0,
+              width: "100%",
+              height: newPostPopoverHeight + "px",
+              backgroundColor: "rgba(120, 120, 120, 0.5)",
+              zIndex: "100",
+            }}
+          ></div>
+        </Resizable>
+      )}
     </Layout>
   )
 }
