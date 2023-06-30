@@ -1,6 +1,4 @@
-import Layout from "src/core/layouts/Layout"
 import { BlitzPage } from "@blitzjs/next"
-import { APP_NAME } from "src/core/constants"
 import { Button, Grid, Loading, Spacer } from "@nextui-org/react"
 import { useWindowSize } from "usehooks-ts"
 import ThreadCard from "../core/components/ThreadCard/ThreadCard"
@@ -69,7 +67,7 @@ const Feed: BlitzPage = (props: any) => {
             New Thread
           </Button>
           <Spacer y={1} />
-          {categories.categories.map((c: Category) => (
+          {categories?.categories.map((c: Category) => (
             <CategoryPill
               key={c.id}
               category={c}
@@ -80,7 +78,7 @@ const Feed: BlitzPage = (props: any) => {
         </div>
       </Grid>
       <Grid xs={12} sm={10.5} style={{ flexDirection: "column" }}>
-        {threads.map((t) => (
+        {threads?.map((t) => (
           <div key={t.id}>
             <ThreadCard thread={t} />
             <Spacer y={0.5} />

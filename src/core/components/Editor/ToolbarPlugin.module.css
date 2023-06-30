@@ -1,0 +1,50 @@
+.toolbar {
+  display: flex;
+  margin-bottom: 4px;
+  padding: 4px;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  vertical-align: middle;
+  overflow: auto;
+  height: 25px;
+  position: sticky;
+  top: 0;
+  z-index: 2;
+}
+
+.toolbar button.toolbar_item {
+  border: 0;
+  display: flex;
+  background: none;
+  border-radius: 10px;
+  padding: 8px;
+  cursor: pointer;
+  vertical-align: middle;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.toolbar button.toolbar_item:disabled {
+  cursor: not-allowed;
+}
+
+.toolbar button.toolbar_item.spaced {
+  margin-right: 2px;
+}
+
+.toolbar button.toolbar_item.active {
+  background-color: #eee;
+}
+
+.toolbar button.toolbar_item.active.dark {
+  background-color: #111;
+}
+
+.toolbar .toolbar_item:hover:not([disabled]) {
+  background-color: #eee;
+}
+
+.toolbar .toolbar_item.dark:hover:not([disabled]) {
+  background-color: #111;
+}

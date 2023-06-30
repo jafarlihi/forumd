@@ -2,6 +2,7 @@ import React, { SyntheticEvent, useState } from "react"
 import { ResizeCallbackData, Resizable } from "react-resizable"
 import { useWindowSize } from "usehooks-ts"
 import { MdDragHandle } from "react-icons/md"
+import Editor from "./Editor/Editor"
 
 export default function NewPostPopover(props: any) {
   const { width, height } = useWindowSize()
@@ -46,7 +47,11 @@ export default function NewPostPopover(props: any) {
               backgroundColor: "rgba(120, 120, 120, 0.5)",
               zIndex: "100",
             }}
-          ></div>
+          >
+            <div style={{ position: "absolute", top: "18px", width: "100%" }}>
+              <Editor />
+            </div>
+          </div>
         </Resizable>
       )}
     </>

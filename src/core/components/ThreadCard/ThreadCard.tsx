@@ -15,7 +15,7 @@ export default function TheadCard(props: ThreadCardProps) {
 
   return (
     <div
-      className={!isDark ? styles.wrapper_light : styles.wrapper_dark}
+      className={`${styles.wrapper} ${isDark && styles.dark}`}
       onClick={() => router.push(`/thread/${props.thread.id}`)}
     >
       {!props.thread.creator.avatar ? (

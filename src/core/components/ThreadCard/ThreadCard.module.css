@@ -1,23 +1,15 @@
-.wrapper_light {
+.wrapper {
   display: flex;
   width: 100%;
   height: auto;
   cursor: pointer;
 }
 
-.wrapper_light:hover {
+.wrapper:hover {
   background-color: #f8f9fa;
-  border-radius: 10px;
+  border-radius: 6px;
 }
 
-.wrapper_dark {
-  display: flex;
-  width: 100%;
-  height: auto;
-  cursor: pointer;
-}
-
-.wrapper_dark:hover {
+.wrapper.dark:hover {
   background-color: #161616;
-  border-radius: 10px;
 }
